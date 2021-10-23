@@ -40,8 +40,13 @@ const ThoughtSchema = new Schema({
         type: Date,
         default: Date.now,
         get: (createdAtVal) => dateFormat(createdAtVal)
-    }
-},
+    },
+    username: {
+        type: String,
+        required: true,
+      },
+      reactions: [ReactionSchema],
+    },
     {
         toJSON: {
             virtuals: true,
@@ -56,6 +61,6 @@ ReactionSchema.virtual('reactionCount').get(function () {
 });
 
 
-const Thought = model('Thought', ReactionSchema , ThoughtSchema);
+const Thought = model('Thought', ThoughtSchema);
 
 module.exports = Thought;
