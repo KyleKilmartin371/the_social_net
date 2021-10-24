@@ -40,9 +40,10 @@ const userController = {
   },
 
   // create a user
-  createUser({ body }, res) {
-    User.create(body)
-      .then(dbUserData => res.json(dbUserData))
+  createUser(req, res) {
+    User.create(req.body)
+      .then(dbUserData => {res.json(dbUserData);
+      })
       .catch(err => res.status(400).json(err));
   },
 
@@ -73,10 +74,10 @@ const userController = {
   },
 
   // add friend
-  addFriend({ params }, res) {
+  addFriend(req, res) {
     User.findOneAndUpdate(
-      { _id: params.id },
-      { $addToSet: { friends: params.friendsId } },
+      { _id: req.params.id },
+      { $addToSet: { friends: req.params.friendsId } },
       { new: true }
     )
       .then(dbUserData => {
